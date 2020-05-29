@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} - Blueddit</title>
+</head>
+<body>
+    <h1>Welcome to BLUEDDIT</h1>
+    <a href="{% url 'index' %}">Home</a> /
+    <a href="{% url 'signup' %}">Sign up</a>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
