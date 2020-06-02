@@ -4,6 +4,7 @@ from .models import Post
 
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
@@ -38,3 +39,7 @@ class IndexView(ListView):
 class PostView(DetailView):
     model = Post
     template_name = 'posts/post.html'
+
+@login_required
+def profile(request):
+    return render(request, 'posts/profile.html')
