@@ -1,8 +1,7 @@
 {% extends 'posts/base.html' %}
 
 {% block content %}
-{% load static %}
-<img src="{% static " user.profile.image.url " %}">
+<img src="{{ user.profile.image.url }}" />
 Username: {{ user.username }}
 Location: {{ user.profile.location }}
 Bio: {{ user.profile.bio }}
