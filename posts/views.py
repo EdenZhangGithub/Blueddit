@@ -1,13 +1,14 @@
 from django.contrib.auth.views import LoginView
 
-from .models import Post
+from .models import Post, Profile
 
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
 
 from .forms import SignUpForm
 
@@ -40,6 +41,6 @@ class PostView(DetailView):
     model = Post
     template_name = 'posts/post.html'
 
-@login_required
-def profile(request):
-    return render(request, 'posts/profile.html')
+def profile(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    return render(request, 'posts/profile.html', {'user': user})
