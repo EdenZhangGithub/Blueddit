@@ -11,3 +11,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+class PostCreateForm(forms.Form):
+    title = forms.CharField(label='Title', max_length=50)
+    content = forms.CharField(label='Content', required=False, widget=forms.Textarea)

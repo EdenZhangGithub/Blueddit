@@ -9,8 +9,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
-from .forms import SignUpForm
+from .forms import SignUpForm, PostCreateForm
 
 # Create your views here.
 def signup(request):
@@ -44,3 +46,22 @@ class PostView(DetailView):
 def profile(request, username):
     user = get_object_or_404(get_user_model(), username=username)
     return render(request, 'posts/profile.html', {'user': user})
+
+
+@login_required()
+def postcreate(request):
+    if request.method == 'POST':
+        form = PostCreateForm(request.POST)
+
+        if form.is_valid():
+            post = Post()
+            post.title = request.POST['title']
+            post.content = request.POST['content']
+            post.uploader = request.user
+
+            post.save()
+
+            return HttpResponseRedirect(reverse('post', args=(post.pk,)))
+    else:
+        form = PostCreateForm()
+    return render(request, 'posts/create_post.html', {'form': form})

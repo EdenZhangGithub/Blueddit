@@ -3,6 +3,7 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
+<h1><a href="{% url 'create_post' %}">New Post</a></h1>
 <ol>
 {% for post in post_list %}
     <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
