@@ -3,6 +3,7 @@ from django.contrib.auth.views import LoginView
 from .models import Post, Profile
 
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -65,3 +66,15 @@ def postcreate(request):
     else:
         form = PostCreateForm()
     return render(request, 'posts/create_post.html', {'form': form})
+
+
+class UpdateProfile(UpdateView):
+    model = Profile
+    fields = ['image', 'bio', 'location']
+    template_name = 'posts/profile_update_form.html'
+
+    def get_object(self, queryset=None):
+        return Profile.objects.get(user=self.request.user)
+
+
+

@@ -100,6 +100,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: "/accounts/profile/%s/" % u.username,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
