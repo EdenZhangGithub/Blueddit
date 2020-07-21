@@ -102,6 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: "/accounts/profile/%s/" % u.username,
+
 }
 
 LOGIN_REDIRECT_URL = '/'

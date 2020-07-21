@@ -33,12 +33,14 @@ def SignUp(request):
 class Login(LoginView):
     template_name = 'posts/login.html'
 
+
 class IndexView(ListView):
     context_object_name = 'post_list'
     template_name = 'posts/index.html'
 
     def get_queryset(self):
         return Post.objects.all()
+
 
 @login_required()
 def PostCreate(request):
@@ -58,18 +60,18 @@ def PostCreate(request):
         form = PostCreateForm()
     return render(request, 'posts/post_create.html', {'form': form})
 
+class PostView(DetailView):
+    model = Post
+    template_name = 'posts/post.html'
+
 class PostUpdate(UpdateView):
     model = Post
     fields = ['title', 'content']
     template_name = 'posts/post_update_form.html'
 
-class PostView(DetailView):
-    model = Post
-    template_name = 'posts/post.html'
-
 class PostDelete(DeleteView):
     model = Post
-    success_url = reverse_lazy()
+    success_url = '/'
 
 
 def Profile(request, username):

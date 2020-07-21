@@ -7,4 +7,6 @@
 <pre>{{ object.content }}</pre>
 <p><a href="{% url 'post_update' post.pk %}">Edit Post</a></p>
 <p><a href="{% url 'profile' object.uploader %}">{{ object.uploader }}</a></p>
+<p><a href="{% url 'post_delete' post.pk %}">Delete</a></p>
+
 {% endblock %}
