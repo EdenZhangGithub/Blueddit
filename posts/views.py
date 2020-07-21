@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 from .models import Post, Profile
 
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -11,12 +11,12 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from .forms import SignUpForm, PostCreateForm
 
 # Create your views here.
-def signup(request):
+def SignUp(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -40,17 +40,8 @@ class IndexView(ListView):
     def get_queryset(self):
         return Post.objects.all()
 
-class PostView(DetailView):
-    model = Post
-    template_name = 'posts/post.html'
-
-def profile(request, username):
-    user = get_object_or_404(get_user_model(), username=username)
-    return render(request, 'posts/profile.html', {'user': user})
-
-
 @login_required()
-def postcreate(request):
+def PostCreate(request):
     if request.method == 'POST':
         form = PostCreateForm(request.POST)
 
@@ -65,10 +56,27 @@ def postcreate(request):
             return HttpResponseRedirect(reverse('post', args=(post.pk,)))
     else:
         form = PostCreateForm()
-    return render(request, 'posts/create_post.html', {'form': form})
+    return render(request, 'posts/post_create.html', {'form': form})
+
+class PostUpdate(UpdateView):
+    model = Post
+    fields = ['title', 'content']
+    template_name = 'posts/post_update_form.html'
+
+class PostView(DetailView):
+    model = Post
+    template_name = 'posts/post.html'
+
+class PostDelete(DeleteView):
+    model = Post
+    success_url = reverse_lazy()
 
 
-class UpdateProfile(UpdateView):
+def Profile(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    return render(request, 'posts/profile.html', {'user': user})
+
+class ProfileUpdate(UpdateView):
     model = Profile
     fields = ['image', 'bio', 'location']
     template_name = 'posts/profile_update_form.html'
@@ -76,10 +84,8 @@ class UpdateProfile(UpdateView):
     def get_object(self, queryset=None):
         return Profile.objects.get(user=self.request.user)
 
-class UpdatePost(UpdateView):
-    model = Post
-    fields = ['title', 'content']
-    template_name = 'posts/post_update_form.html'
+
+
 
 
 

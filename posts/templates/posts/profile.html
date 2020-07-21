@@ -1,10 +1,10 @@
 {% extends 'posts/base.html' %}
 
 {% block content %}
-<p><a href="{% url 'update_profile' %}">Edit Profile</a></p>
-<img src="{{ user.profile.image.url }}" />
-Username: {{ user.username }}
-Location: {{ user.profile.location }}
-Bio: {{ user.profile.bio }}
+<p><a href="{% url 'profile_update' %}">Edit Profile</a></p>
+<img src="{{ user.profile.image.url }}" /> <br>
+Username: {{ user.username }} <br>
+Location: {{ user.profile.location }} <br>
+Bio: {{ user.profile.bio }} <br>
 Email: {{ user.email }}
 {% endblock %}

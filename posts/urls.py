@@ -6,13 +6,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('accounts/signup/', views.signup, name='signup'),
+    path('accounts/signup/', views.SignUp, name='signup'),
     path('accounts/login/', views.Login.as_view(), name='login'),
-    path('accounts/profile/<username>/', views.profile, name='profile'),
-    path('accounts/update-profile/', views.UpdateProfile.as_view(), name='update_profile'),
-    path('posts/create/', views.postcreate, name='create_post'),
+    path('accounts/profile/<username>/', views.Profile, name='profile'),
+    path('accounts/update-profile/', views.ProfileUpdate.as_view(), name='profile_update'),
+    path('posts/create/', views.PostCreate, name='post_create'),
     path('posts/<int:pk>/', views.PostView.as_view(), name='post'),
-#    path('posts/update-post/', views.UpdatePost.as_view(), name='update_post')
-    path('posts/update-post/<int:pk>/', views.UpdatePost.as_view(), name='update_post')
+    path('posts/update-post/<int:pk>/', views.PostUpdate.as_view(), name='post_update'),
+    path('posts/<int:pk>/delete/', views.PostDelete.as_view(), name='post_delete')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
