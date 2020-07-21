@@ -76,5 +76,14 @@ class UpdateProfile(UpdateView):
     def get_object(self, queryset=None):
         return Profile.objects.get(user=self.request.user)
 
+class UpdatePost(UpdateView):
+    model = Post
+    fields = ['title', 'content']
+    template_name = 'posts/post_update_form.html'
+
+
+
+
+
 
 
