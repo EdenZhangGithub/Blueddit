@@ -1,7 +1,7 @@
 {% extends 'posts/base.html' %}
 
 {% block content %}
-<p><a href="{% url 'profile_update' %}">Edit Profile</a></p>
+<p><a href="{% url 'profile_update' %}">Edit profile</a></p>
 <img src="{{ user.profile.image.url }}" /> <br>
 Username: {{ user.username }} <br>
 Location: {{ user.profile.location }} <br>

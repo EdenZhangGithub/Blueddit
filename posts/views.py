@@ -16,7 +16,7 @@ from django.urls import reverse, reverse_lazy
 from .forms import SignUpForm, PostCreateForm
 
 # Create your views here.
-def SignUp(request):
+def sign_up(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -43,7 +43,7 @@ class IndexView(ListView):
 
 
 @login_required()
-def PostCreate(request):
+def post_create(request):
     if request.method == 'POST':
         form = PostCreateForm(request.POST)
 
@@ -74,7 +74,7 @@ class PostDelete(DeleteView):
     success_url = '/'
 
 
-def Profile(request, username):
+def profile(request, username):
     user = get_object_or_404(get_user_model(), username=username)
     return render(request, 'posts/profile.html', {'user': user})
 
@@ -84,7 +84,7 @@ class ProfileUpdate(UpdateView):
     template_name = 'posts/profile_update_form.html'
 
     def get_object(self, queryset=None):
-        return Profile.objects.get(user=self.request.user)
+        return Profile  .objects.get(user=self.request.user)
 
 
 

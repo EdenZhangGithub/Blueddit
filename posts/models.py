@@ -24,7 +24,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username} profile'
 
     def get_absolute_url(self):
         return reverse('profile', args=(self.user.username,))
