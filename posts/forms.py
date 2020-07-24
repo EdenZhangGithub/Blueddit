@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.forms import ValidationError
+
+from .models import Community
 
 
 class SignUpForm(UserCreationForm):
@@ -15,3 +18,10 @@ class SignUpForm(UserCreationForm):
 class PostCreateForm(forms.Form):
     title = forms.CharField(label='Title', max_length=50)
     content = forms.CharField(label='Content', required=False, widget=forms.Textarea)
+    community = forms.SlugField(label='Community', required=True)
+
+    def clean_community(self):
+        community = self.cleaned_data['community']
+        if not Community.objects.filter(slug=community).exists():
+            raise ValidationError("Community doesn't exist")
+        return community

@@ -1,6 +1,6 @@
 from django.contrib.auth.views import LoginView
 
-from .models import Post, Profile
+from .models import Post, Community, Profile
 
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView
@@ -51,6 +51,7 @@ def post_create(request):
             post = Post()
             post.title = request.POST['title']
             post.content = request.POST['content']
+            post.community = Community.object.get(slug=request.POST['community'])
             post.uploader = request.user
 
             post.save()

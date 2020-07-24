@@ -5,10 +5,22 @@ from django.urls import reverse
 
 
 # Create your models here.
+class Community(models.Model):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
+
+    class Meta:
+        verbose_name_plural = "communities"
+
+    def __str__(self):
+        return self.slug
+
+
 class Post(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField(blank=True)
     uploader = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    community = models.ForeignKey(Community, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -28,3 +40,4 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return reverse('profile', args=(self.user.username,))
+
