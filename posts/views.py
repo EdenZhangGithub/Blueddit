@@ -42,6 +42,12 @@ class IndexView(ListView):
         return Post.objects.all()
 
 
+class CommunityView(DetailView):
+    model = Community
+    context_object_name = 'community'
+    template_name = 'posts/community.html'
+
+
 @login_required()
 def post_create(request):
     if request.method == 'POST':
@@ -51,7 +57,7 @@ def post_create(request):
             post = Post()
             post.title = request.POST['title']
             post.content = request.POST['content']
-            post.community = Community.object.get(slug=request.POST['community'])
+            post.community = Community.objects.get(slug=request.POST['community'])
             post.uploader = request.user
 
             post.save()
@@ -86,6 +92,7 @@ class ProfileUpdate(UpdateView):
 
     def get_object(self, queryset=None):
         return Profile  .objects.get(user=self.request.user)
+
 
 
 
