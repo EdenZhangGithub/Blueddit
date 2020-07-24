@@ -15,5 +15,6 @@ urlpatterns = [
     path('posts/create/', views.post_create, name='post_create'),
     path('posts/update-post/<int:pk>/', views.PostUpdate.as_view(), name='post_update'),
     path('posts/<int:pk>/delete/', views.PostDelete.as_view(), name='post_delete'),
+    path('search/', views.SearchView.as_view(), name='search')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

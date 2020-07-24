@@ -94,6 +94,24 @@ class ProfileUpdate(UpdateView):
         return Profile  .objects.get(user=self.request.user)
 
 
+class SearchView(ListView):
+    model = Post
+    context_object_name = 'search_result'
+    template_name = 'posts/search.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', '')
+
+        return Post.objects.filter(title__contains=query)
+
+    def get_extra_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+
+        return context
+
+
+
 
 
 
