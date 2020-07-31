@@ -10,7 +10,9 @@
 <body>
     <header>
         <h4><a href="{% url 'index' %}" style="text-decoration: none; color: #000"><strong style="color: dodgerblue;">Blue</strong>ddit</a></h4>
-        <input type="text" id="search_bar">
+        <form action="{% url 'search' %}" role="search">
+            <input type="text" id="search_bar" name="q">
+        </form>
         <div>
             <a href="{% url 'index' %}">Home</a> /
             {% if user.is_authenticated %}
