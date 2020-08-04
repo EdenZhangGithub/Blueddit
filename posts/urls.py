@@ -10,6 +10,7 @@ urlpatterns = [
     path('accounts/login/', views.Login.as_view(), name='login'),
     path('accounts/profile/<username>/', views.profile, name='profile'),
     path('accounts/update-profile/', views.ProfileUpdate.as_view(), name='profile_update'),
+    path('b/create/', views.CommunityCreate.as_view(), name='community_create'),
     path('b/<slug:slug>/', views.CommunityView.as_view(), name='community'),
     path('posts/<int:pk>/', views.PostView.as_view(), name='post'),
     path('posts/create/', views.post_create, name='post_create'),

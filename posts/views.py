@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 from .models import Post, Community, Profile
 
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -49,6 +49,11 @@ class IndexView(ListView):
     def get_queryset(self):
         return Post.objects.all()
 
+
+class CommunityCreate(LoginRequiredMixin, CreateView):
+    model = Community
+    fields = ['title', 'slug']
+    template_name = 'posts/community_create.html'
 
 class CommunityView(DetailView):
     model = Community

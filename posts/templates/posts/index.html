@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1><a href="{% url 'post_create' %}">New Post</a></h1>
+<h1><a href="{% url 'community_create' %}">New Community</a></h1>
 <ol>
 {% for post in post_list %}
     <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
