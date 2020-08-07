@@ -15,6 +15,9 @@ class Community(models.Model):
     def __str__(self):
         return self.slug
 
+    def get_absolute_url(self):
+        return reverse('community', kwargs={'slug': self.slug})
+
 
 class Post(models.Model):
     title = models.CharField(max_length=50)
