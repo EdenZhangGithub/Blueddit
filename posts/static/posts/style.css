@@ -24,7 +24,7 @@ header {
 }
 
 #search_bar:focus {
-    border-color: dodgerBlue;
+    border-color: #1E90FF;
     outline-width: 0;
 }
 
