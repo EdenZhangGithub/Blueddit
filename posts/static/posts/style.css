@@ -27,3 +27,7 @@ header {
     border-color: dodgerBlue;
     outline-width: 0;
 }
+
+a {
+    text-decoration: none;
+}
