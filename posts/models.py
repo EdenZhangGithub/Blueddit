@@ -7,7 +7,7 @@ from django.urls import reverse
 # Create your models here.
 class Community(models.Model):
     title = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=50)
+    slug = models.SlugField(max_length=50, unique=True)
 
     class Meta:
         verbose_name_plural = "communities"
