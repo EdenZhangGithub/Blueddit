@@ -17,9 +17,7 @@
     </form>
 
     {% for comment in post.comments.all %}
-        {{ comment.created_date }}
-        {{ comment.author }}
-        {{ comment.content }}
+        <p>{{ comment.content }} - {{ comment.uploader }}</p>
     {% empty %}
         <p>No comments</p>
     {% endfor %}
