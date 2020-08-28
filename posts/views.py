@@ -122,7 +122,11 @@ def comment_create(request, pk):
 
     return redirect('post', pk)
 
+@require_http_methods(["POST"])
+def comment_delete(request, pk, comment_pk):
+    Comment.objects.get(pk=comment_pk).delete()
 
+    return redirect('post', pk)
 
 class SearchView(ListView):
     model = Post
