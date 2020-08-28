@@ -1,6 +1,6 @@
 from django.contrib.auth.views import LoginView
 
-from .models import Post, Community, Profile
+from .models import Post, Community, Profile, Comment
 
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
@@ -13,6 +13,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
+from django.views.decorators.http import require_http_methods
 
 from .forms import SignUpForm, PostCreateForm, CommentForm
 
@@ -111,15 +112,15 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
         return Profile.objects.get(user=self.request.user)
 
 
+@require_http_methods(["POST"])
 def comment_create(request, pk):
-    if request.method == "POST":
-        form = CommentForm(request.POST)
+    comment = Comment()
+    comment.post = Post.objects.get(pk=pk)
+    comment.content = request.POST['content']
+    comment.uploader = request.user
+    comment.save()
 
-        if form.is_valid():
-
-    else:
-        form = CommentForm()
-    return render(request, 'posts/post_create.html', {'form': form})
+    return redirect('post', pk)
 
 
 

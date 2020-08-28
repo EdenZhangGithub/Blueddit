@@ -9,7 +9,13 @@
     <p><a href="{% url 'profile' post.uploader %}">{{ post.uploader }}</a></p>
     <p><a href="{% url 'post_delete' post.pk %}">Delete</a></p>
     <p><a href="{% url 'community' post.community.slug %}">b/{{ post.community }}</a></p>
-    <p><a href="{% url '' post.pk %}"></a></p>
+
+    <form action="{% url 'comment_create' post.pk %}" method="post" id="comment-form">
+        {% csrf_token %}
+        <textarea name="content"></textarea>
+        <button type="submit">Save</button>
+    </form>
+
     {% for comment in post.comments.all %}
         {{ comment.created_date }}
         {{ comment.author }}
