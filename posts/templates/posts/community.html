@@ -3,10 +3,10 @@
 {% block title %}{{ community.title }}{% endblock %}
 
 {% block content %}
-<h1><a href="{% url 'post_create' %}">New Post</a></h1>
-<ol>
-{% for post in community.post_set.all %}
-    <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
-{% endfor %}
-</ol>
+    <h1><a href="{% url 'post_create' %}">New Post</a></h1>
+    <ol>
+    {% for post in community.post_set.all %}
+        <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
+    {% endfor %}
+    </ol>
 {% endblock %}

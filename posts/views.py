@@ -14,7 +14,7 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
 
-from .forms import SignUpForm, PostCreateForm
+from .forms import SignUpForm, PostCreateForm, CommentForm
 
 # Create your views here.
 class UploaderRequiredMixin(object):
@@ -109,6 +109,18 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return Profile.objects.get(user=self.request.user)
+
+
+def comment_create(request, pk):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+
+    else:
+        form = CommentForm()
+    return render(request, 'posts/post_create.html', {'form': form})
+
 
 
 class SearchView(ListView):

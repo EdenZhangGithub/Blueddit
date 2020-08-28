@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 # Create your models here.
@@ -30,6 +31,16 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'pk': self.pk})
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE(), related_name='comments')
+    content = models.TextField(max_length=100, blank=False)
+    date = models.DateTimeField(default=timezone.now)
+    uploader = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
 
 
 class Profile(models.Model):

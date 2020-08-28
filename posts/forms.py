@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ValidationError
 
-from .models import Community
+from .models import Community, Comment
 
 
 class SignUpForm(UserCreationForm):
@@ -27,3 +27,12 @@ class PostCreateForm(forms.Form):
         if not Community.objects.filter(slug=community).exists():
             raise ValidationError("Community doesn't exist")
         return community
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('uploader', 'content', )
+
+
