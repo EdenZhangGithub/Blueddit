@@ -19,10 +19,11 @@
     {% for comment in post.comments.all %}
         <p>{{ comment.content }} - {{ comment.uploader }}</p>
         {% if comment.uploader == request.user %}
-            <form action="{% url 'comment_update' post.pk comment.pk %}" method="post">
+            <button onclick="toggleEdit({{ comment.pk }})">Edit</button>
+            <form id="comment-{{ comment.pk }}" action="{% url 'comment_update' post.pk comment.pk %}" method="post" style="display: none">
                 {% csrf_token %}
                 <textarea name="content">{{ comment.content }}</textarea>
-                <button type="submit">Update</button>
+                <button type="submit">Save</button>
             </form>
 
             <form action="{% url 'comment_delete' post.pk comment.pk %}" method="post">
@@ -33,4 +34,7 @@
     {% empty %}
         <p>No comments</p>
     {% endfor %}
+
+    {% load static %}
+    <script src="{% static 'posts/post.js' %}"></script>
 {% endblock %}
