@@ -123,6 +123,15 @@ def comment_create(request, pk):
     return redirect('post', pk)
 
 @require_http_methods(["POST"])
+def comment_update(request, pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    comment.content = request.POST['content']
+    comment.save()
+
+    return redirect('post', pk)
+
+
+@require_http_methods(["POST"])
 def comment_delete(request, pk, comment_pk):
     Comment.objects.get(pk=comment_pk).delete()
 

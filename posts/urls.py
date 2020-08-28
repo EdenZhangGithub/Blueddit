@@ -15,9 +15,10 @@ urlpatterns = [
     path('posts/<int:pk>/', views.PostView.as_view(), name='post'),
     path('posts/create/', views.post_create, name='post_create'),
     path('posts/update-post/<int:pk>/', views.PostUpdate.as_view(), name='post_update'),
-    path('posts/<int:pk>/delete/', views.PostDelete.as_view(), name='post_delete'),
+    path('posts/<int:pk>/delete-post/', views.PostDelete.as_view(), name='post_delete'),
     path('posts/<int:pk>/comment/', views.comment_create, name='comment_create'),
-    path('posts/<int:pk>/comment/<int:comment_pk>', views.comment_delete, name='comment_delete'),
+    path('posts/<int:pk>/update-comment/<int:comment_pk>', views.comment_update, name='comment_update'),
+    path('posts/<int:pk>/delete-comment/<int:comment_pk>', views.comment_delete, name='comment_delete'),
     path('search/', views.SearchView.as_view(), name='search')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
