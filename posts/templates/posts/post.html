@@ -5,10 +5,12 @@
 {% block content %}
     <h1>{{ object.title }}</h1>
     <pre>{{ object.content }}</pre>
-    <p><a href="{% url 'post_update' post.pk %}">Edit Post</a></p>
     <p><a href="{% url 'profile' post.uploader %}">{{ post.uploader }}</a></p>
-    <p><a href="{% url 'post_delete' post.pk %}">Delete</a></p>
-    <p><a href="{% url 'community' post.community.slug %}">b/{{ post.community }}</a></p>
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'post_update' post.pk %}">Edit Post</a></p>
+        <p><a href="{% url 'post_delete' post.pk %}">Delete</a></p>
+        <p><a href="{% url 'community' post.community.slug %}">b/{{ post.community }}</a></p>
+    {% endif %}
 
     <form action="{% url 'comment_create' post.pk %}" method="post" id="comment-form">
         {% csrf_token %}

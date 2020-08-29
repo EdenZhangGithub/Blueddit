@@ -3,9 +3,9 @@
 {% block title %}Search - {{ query }}{% endblock %}
 
 {% block content %}
-<ol>
-{% for post in search_result %}
-    <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
-{% endfor %}
-</ol>
+    <ol>
+    {% for post in search_result %}
+        <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
+    {% endfor %}
+    </ol>
 {% endblock %}
