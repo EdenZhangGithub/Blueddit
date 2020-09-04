@@ -86,6 +86,7 @@ class PostView(DetailView):
     context_object_name = "post"
     template_name = 'posts/post.html'
 
+
 class PostUpdate(LoginRequiredMixin, UploaderRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
