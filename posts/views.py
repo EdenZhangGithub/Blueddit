@@ -11,7 +11,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.http import require_http_methods
 
@@ -86,6 +86,21 @@ class PostView(DetailView):
     context_object_name = "post"
     template_name = 'posts/post.html'
 
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        slug = self.kwargs.get(self.slug_url_kwarg)
+
+        queryset.filter(pk=pk, community__slug=slug)
+
+        try:
+            obj = queryset.get()
+        except queryset.model.DoesNotExist:
+            raise Http404("No %(verbose_name)s found matching the query" %
+                          {'verbose_name': queryset.model._meta.verbose_name})
+        return obj
 
 class PostUpdate(LoginRequiredMixin, UploaderRequiredMixin, UpdateView):
     model = Post
@@ -155,6 +170,8 @@ class SearchView(ListView):
         return context
 
 
+def portfolio():
+    pass
 
 
 

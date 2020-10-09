@@ -1,4 +1,4 @@
-from .models import Post, Community, Profile, Comment
+from .models import Post, Community, Profile, Comment, Stock
 
 from django.contrib import admin
 
@@ -10,3 +10,4 @@ admin.site.register(Post)
 admin.site.register(Community, CommunityAdmin)
 admin.site.register(Profile)
 admin.site.register(Comment)
+admin.site.register(Stock)

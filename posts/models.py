@@ -55,3 +55,23 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('profile', args=(self.user.username,))
 
+
+class Stock(models.Model):
+    ticker = models.CharField(max_length=5, blank=True, unique=True)
+    owners = models.ManyToManyField(User, through='share')
+
+    def __str__(self):
+        return self.ticker
+
+class Share(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    quantity = models.DecimalField(max_digits=12, decimal_places=2)
+
+
+
+
+
+
+
+
