@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from iexfinance.stocks import Stock as IexStock
 
+from decimal import Decimal
 
 # Create your models here.
 class Community(models.Model):
@@ -63,10 +65,16 @@ class Stock(models.Model):
     def __str__(self):
         return self.ticker
 
+    def get_price(self):
+        return IexStock(self.ticker).get_price()
+
 class Share(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     quantity = models.DecimalField(max_digits=12, decimal_places=2)
+
+    def get_value(self):
+        return round(Decimal(self.stock.get_price()) * self.quantity, 2)
 
 
 

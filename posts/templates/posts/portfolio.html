@@ -1,2 +1,22 @@
 {% extends "posts/base.html" %}
 
+{% block title %}Portfolio{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>Shares</th>
+            <th>Value</th>
+        </tr>
+        {% for share in shares %}
+        <tr>
+            <th>{{ share.stock.ticker }}</th>
+            <th>${{ share.stock.get_price }}</th>
+            <th>{{ share.quantity}}</th>
+            <th>${{ share.get_value }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib.auth.views import LoginView
 
-from .models import Post, Community, Profile, Comment
+from .models import Post, Community, Profile, Comment, Share
 
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
@@ -170,9 +170,13 @@ class SearchView(ListView):
         return context
 
 
-def portfolio():
-    pass
-
+def portfolio(request):
+    user = request.user
+    shares = Share.objects.filter(owner=user)
+    context = {
+        "shares": shares,
+    }
+    return render(request, 'posts/portfolio.html', context)
 
 
 
