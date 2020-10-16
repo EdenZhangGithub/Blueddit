@@ -32,7 +32,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'pk': self.pk})
+        return reverse('post', kwargs={'slug': self.community.slug, 'pk': self.pk})
 
 
 class Comment(models.Model):

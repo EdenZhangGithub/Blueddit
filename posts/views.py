@@ -76,7 +76,7 @@ def post_create(request):
 
             post.save()
 
-            return HttpResponseRedirect(reverse('post', args=(post.pk,)))
+            return HttpResponseRedirect(post.get_absolute_url())
     else:
         form = PostCreateForm()
     return render(request, 'posts/post_create.html', {'form': form})
@@ -93,10 +93,8 @@ class PostView(DetailView):
         pk = self.kwargs.get(self.pk_url_kwarg)
         slug = self.kwargs.get(self.slug_url_kwarg)
 
-        queryset.filter(pk=pk, community__slug=slug)
-
         try:
-            obj = queryset.get()
+            obj = queryset.get(pk=pk, community__slug=slug)
         except queryset.model.DoesNotExist:
             raise Http404("No %(verbose_name)s found matching the query" %
                           {'verbose_name': queryset.model._meta.verbose_name})
