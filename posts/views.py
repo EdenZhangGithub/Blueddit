@@ -134,7 +134,7 @@ def comment_create(request, pk):
     comment.uploader = request.user
     comment.save()
 
-    return redirect('post', pk)
+    return HttpResponseRedirect(comment.post.get_absolute_url())
 
 @require_http_methods(["POST"])
 def comment_update(request, pk, comment_pk):
@@ -142,14 +142,16 @@ def comment_update(request, pk, comment_pk):
     comment.content = request.POST['content']
     comment.save()
 
-    return redirect('post', pk)
+    return HttpResponseRedirect(comment.post.get_absolute_url())
 
 
 @require_http_methods(["POST"])
 def comment_delete(request, pk, comment_pk):
-    Comment.objects.get(pk=comment_pk).delete()
+    comment = Comment.objects.get(pk=comment_pk)
+    post = comment.post
+    comment.delete()
 
-    return redirect('post', pk)
+    return HttpResponseRedirect(post.get_absolute_url())
 
 class SearchView(ListView):
     model = Post
