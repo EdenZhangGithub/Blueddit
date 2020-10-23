@@ -19,4 +19,14 @@
         </tr>
         {% endfor %}
     </table>
+
+    <form action="{% url 'share_create' %}" method="post">
+        {% csrf_token %}
+        <br>
+        <label>Ticker<input name="ticker" type="text"></label>
+        <br>
+        <label>Quantity<input name="quantity" type="text"></label>
+        <button type="submit">Add Stock</button>
+    </form>
+
 {% endblock %}

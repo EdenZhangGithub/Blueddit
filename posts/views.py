@@ -1,6 +1,6 @@
 from django.contrib.auth.views import LoginView
 
-from .models import Post, Community, Profile, Comment, Share
+from .models import Post, Community, Profile, Comment, Share, Stock
 
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
@@ -178,8 +178,20 @@ def portfolio(request):
     }
     return render(request, 'posts/portfolio.html', context)
 
+@require_http_methods(["POST"])
+def share_create(request):
+    share = Share()
+    share.quantity = request.POST['quantity']
+    share.owner = request.user
 
+    stock, stock_created = Stock.objects.get_or_create(
+        ticker=request.POST['ticker']
+    )
+    share.stock = stock
 
+    share.save()
+
+    return redirect('portfolio')
 
 
 
