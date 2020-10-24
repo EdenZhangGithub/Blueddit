@@ -193,6 +193,18 @@ def share_create(request):
 
     return redirect('portfolio')
 
+@require_http_methods(["POST"])
+def share_update(request, ticker):
+    share = Share.objects.get(owner=request.user, stock__ticker=ticker)
+    share.quantity = request.POST['quantity']
+
+    share.save()
+
+    return redirect('portfolio')
+
+@require_http_methods(["POST"])
+def share_delete(request, ticker):
+    share = Share.objects.get(owner=request.user, stock__ticker=ticker)
 
 
 

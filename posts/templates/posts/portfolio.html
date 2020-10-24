@@ -12,10 +12,21 @@
         </tr>
         {% for share in shares %}
         <tr>
-            <th>{{ share.stock.ticker }}</th>
-            <th>${{ share.stock.get_price }}</th>
-            <th>{{ share.quantity}}</th>
-            <th>${{ share.get_value }}</th>
+            <td>{{ share.stock.ticker }}</td>
+            <td>${{ share.stock.get_price }}</td>
+            <td id="{{ share.stock.ticker }}-q">
+                <span style="display: inline;">{{ share.quantity }}</span>
+                <form action="{% url 'share_update' share.stock.ticker %}" id="{{ share.stock.ticker }}-edit" style="display: none;" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="quantity" value="{{ share.quantity }}">
+                </form>
+            </td>
+            <td>${{ share.get_value }}</td>
+            <td id="{{ share.stock.ticker }}-b">
+                <button style="display: inline;" onclick="showEdit(&quot;{{ share.stock.ticker }}&quot;)">Edit</button>
+                <button style="display: none;" onclick="closeEdit(&quot;{{ share.stock.ticker }}&quot;)">Cancel</button>
+                <button style="display: none;" type="submit" form="{{ share.stock.ticker }}-edit">Save</button>
+            </td>
         </tr>
         {% endfor %}
     </table>
@@ -29,4 +40,6 @@
         <button type="submit">Add Stock</button>
     </form>
 
+    {% load static %}
+        <script src="{% static 'posts/portfolio.js' %}"></script>
 {% endblock %}
